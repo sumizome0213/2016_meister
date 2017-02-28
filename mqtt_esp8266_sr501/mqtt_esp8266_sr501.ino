@@ -39,7 +39,8 @@ const char* mqtt_server = "192.168.3.30";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-char outTopic[50] = "oyahura/oyahura1";
+char outTopic[50] = "oyahura/oyahura1_out"; //待機するTopi名
+char inTopic[50] = "oyahura/oyahura1_in"; //出力するTopi名
 
 long lastMsg = 0;
 char msg[50];
@@ -73,7 +74,7 @@ void setup_wifi() {
 
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
-  Serial.print("inTopic");
+  Serial.print(inTopic);
   Serial.print("] ");
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
@@ -104,7 +105,7 @@ void reconnect() {
       // Once connected, publish an announcement...
       client.publish(outTopic, "hello world");
       // ... and resubscribe
-      client.subscribe("inTopic");
+      client.subscribe(inTopic);
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
