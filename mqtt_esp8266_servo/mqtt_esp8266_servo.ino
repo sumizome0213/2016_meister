@@ -44,6 +44,7 @@ Servo servo1;
 
 char outTopic[50] = "kagi/kagi1_out"; //待機するTopi名
 char inTopic[50] = "kagi/kagi1_in"; //出力するTopic名
+char statusTopic[50] = "kagi/kagi1_status"; //ステータスを出力するTopic名
 
 long lastMsg = 0;
 char msg[50];
@@ -98,9 +99,11 @@ void callback(char* topic, byte* payload, unsigned int length) {
   // 受付トピックの動作
   if ((char)payload[0] == '1') {
     servo(180);
+    digitalWrite(BUILTIN_LED, LOW); //LED on
     
   } else {
     servo(90);
+    digitalWrite(BUILTIN_LED, HIGH); //LED off
     
   }
 
@@ -117,7 +120,7 @@ void reconnect() {
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish(outTopic, "hello world");
+      client.publish(statusTopic, "reconnected");
       // ... and resubscribe
       client.subscribe(inTopic);
     } else {
@@ -154,7 +157,7 @@ void loop() {
     val = analogRead(A0) * 6 /1024.0; //6vを3.3Vに分圧した値を正規の値に戻す
     sprintf(msg, "VCC = %s", dtostrf(val, 4, 2, strVal));
     Serial.println(msg);
-    client.publish(outTopic, msg);
+    client.publish(statusTopic, msg);
   }
 
 }

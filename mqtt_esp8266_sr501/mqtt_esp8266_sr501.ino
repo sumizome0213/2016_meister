@@ -41,6 +41,7 @@ PubSubClient client(espClient);
 
 char outTopic[50] = "oyahura/oyahura1_out"; //待機するTopi名
 char inTopic[50] = "oyahura/oyahura1_in"; //出力するTopi名
+char statusTopic[50] = "oyahura/oyahura1_status"; //ステータスを出力するTopic名
 
 long lastMsg = 0;
 char msg[50];
@@ -103,7 +104,7 @@ void reconnect() {
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish(outTopic, "hello world");
+      client.publish(statusTopic, "reconnected");
       // ... and resubscribe
       client.subscribe(inTopic);
     } else {
@@ -140,7 +141,7 @@ void loop() {
     val = analogRead(A0) * 6 /1024.0; //6vを3.3Vに分圧した値を正規の値に戻す
     sprintf(msg, "VCC = %s", dtostrf(val, 4, 2, strVal));
     Serial.println(msg);
-    client.publish(outTopic, msg);
+    client.publish(statusTopic, msg);
   }
 
   //検出送信
