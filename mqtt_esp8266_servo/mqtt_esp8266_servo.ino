@@ -42,8 +42,8 @@ PubSubClient client(espClient);
 
 Servo servo1;
 
-char outTopic[50] = "kagi/kagi1_out"; //待機するTopi名
-char inTopic[50] = "kagi/kagi1_in"; //出力するTopic名
+char outTopic[50] = "kagi/kagi1_out"; //出力するTopic名
+char inTopic[50] = "kagi/kagi1_in"; //待機するTopi名
 char statusTopic[50] = "kagi/kagi1_status"; //ステータスを出力するTopic名
 
 long lastMsg = 0;
@@ -155,8 +155,9 @@ void loop() {
   if (now - lastMsg > 60000) { //一分間に一度
     lastMsg = now;
     val = analogRead(A0) * 6 /1024.0; //6vを3.3Vに分圧した値を正規の値に戻す
-    sprintf(msg, "VCC = %s", dtostrf(val, 4, 2, strVal));
+    sprintf(msg, "VCC = %sV", dtostrf(val, 4, 2, strVal));
     Serial.println(msg);
+    sprintf(msg, "%s", dtostrf(val, 4, 2, strVal));
     client.publish(statusTopic, msg);
   }
 

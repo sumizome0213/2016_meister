@@ -141,6 +141,7 @@ void loop() {
     val = analogRead(A0) * 6 /1024.0; //6vを3.3Vに分圧した値を正規の値に戻す
     sprintf(msg, "VCC = %s", dtostrf(val, 4, 2, strVal));
     Serial.println(msg);
+    sprintf(msg, "%s", dtostrf(val, 4, 2, strVal));
     client.publish(statusTopic, msg);
   }
 
