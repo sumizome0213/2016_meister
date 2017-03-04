@@ -29,13 +29,13 @@
 
 // Update these with values suitable for your network.
 
-const char* ssid = "Buffalo-G-8A04";
-const char* password = "6rwt8p7sn4pmv";
+//const char* ssid = "Buffalo-G-8A04";
+//const char* password = "6rwt8p7sn4pmv";
 //const char* ssid = "spc24";
 //const char* password = "mokemoke";
-//const char* ssid = "WHR-HP-G";
-//const char* password = "";
-const char* mqtt_server = "192.168.3.30";
+const char* ssid = "WHR-HP-G";
+const char* password = "";
+const char* mqtt_server = "192.168.11.30";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -49,7 +49,7 @@ char msg[50];
 float val = 0;
 char strVal[10];
 
-IRsend irsend(4);
+IRsend irsend(5);
 
 void setup_wifi() {
 
@@ -85,7 +85,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   // 受付トピックの動作
   if ((char)payload[0] == '1') {
-    irsend.sendNEC(0x17620df,32); //ir送信
+    irsend.sendNEC(0x1D7C03F,32); //ir送信
     //digitalWrite(BUILTIN_LED, LOW); //LED on
     delay(3000);
     

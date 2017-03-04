@@ -29,13 +29,13 @@
 
 // Update these with values suitable for your network.
 
-const char* ssid = "Buffalo-G-8A04";
-const char* password = "6rwt8p7sn4pmv";
+//const char* ssid = "Buffalo-G-8A04";
+//const char* password = "6rwt8p7sn4pmv";
 //const char* ssid = "spc24";
 //const char* password = "mokemoke";
-//const char* ssid = "WHR-HP-G";
-//const char* password = "";
-const char* mqtt_server = "192.168.3.30";
+const char* ssid = "WHR-HP-G";
+const char* password = "";
+const char* mqtt_server = "192.168.11.30";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
