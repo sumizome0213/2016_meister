@@ -49,6 +49,8 @@ char msg[50];
 float val = 0;
 char strVal[10];
 
+const char* Filename = "/IRs";
+
 IRsend irsend(5);
 
 void setup_wifi() {
@@ -83,23 +85,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
-  // 受付トピックの動作
+  int num = int((char)payload[1]) + int((char)payload[2])*10;
+
+  rsend.sendNEC(num,32);
+
+  /*// 受付トピックの動作
   if ((char)payload[0] == '1') {
     irsend.sendNEC(0x1D7C03F,32); //ir送信
     //digitalWrite(BUILTIN_LED, LOW); //LED on
     delay(3000);
     
-  }else if((char)payload[0] == '2'){
-    irsend.sendNEC(0x1D7C03F,32); //ir送信
-    //digitalWrite(B
-    UILTIN_LED, LOW); //LED on
-    delay(3000);
-  }else if((char)payload[0] == '3'){
-    irsend.sendNEC(0x1D7C03F,32); //ir送信
-    //digitalWrite(BUILTIN_LED, LOW); //LED on
-    delay(3000);
-    
-  }
+  }*/
 }
 
 void reconnect() {
